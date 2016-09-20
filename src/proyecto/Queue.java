@@ -6,6 +6,6 @@ package proyecto;
 public interface Queue<E> {
    int size();
    void enqueue(E e);
-   E dequeue (int j);
+   E dequeue ();
 
 }
