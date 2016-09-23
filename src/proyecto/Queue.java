@@ -6,6 +6,6 @@ package proyecto;
 public interface Queue<E> {
    int size();
    void enqueue(E e);
-   E dequeue ();
+   E dequeue () throws ColaVacia;
 
 }

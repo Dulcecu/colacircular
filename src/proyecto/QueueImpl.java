@@ -5,8 +5,8 @@ package proyecto;
  */
 public class QueueImpl<E> implements Queue<E>{
 
-    int i=-1;
-    int j =0;
+    int escritor =-1;
+    int lector =0;
     int size=0;
     int len;
     int vuelta=0;
@@ -23,32 +23,32 @@ public class QueueImpl<E> implements Queue<E>{
 
     public void enqueue (E e){
 
-
-
-
-
-
-
-        if(this.j==this.len)
+        if(this.lector ==this.len)
         {
-            this.j=0;
+            this.lector =0;
         }
-        this.i++;
+        if(vuelta<1) {
+            this.escritor++;
+        }
 
-        if(this.i==this.len)
+        if(this.escritor >=this.len)
         {
-            this.i=0;
+            this.escritor =0;
             vuelta++;
         }
-        if(this.i==this.j)
+        if(this.escritor ==this.lector)
         {
             if(vuelta>0) {
-                this.j++;
+                this.lector++;
 
             }
 
         }
-        elements[this.i] = e;
+        elements[this.escritor] = e;
+        if(vuelta>0)
+        {
+        this.escritor++;
+        }
 
 
         if(this.size!=len) {
@@ -58,24 +58,33 @@ public class QueueImpl<E> implements Queue<E>{
 
 
     }
-    public E dequeue() {
+    public E dequeue() throws ColaVacia {
 
         E copia;
-        copia=elements[this.j];
+        copia=elements[this.lector];
 
-        for(int x=this.j;x<len;x++) {
+        for(int x = this.lector; x<len; x++) {
+
+            if(this.size==0)
+            {
+                throw new ColaVacia();
+            }
 
 
             if (x == len-1) {
-                if(this.i!=x) {
+                if(this.escritor !=x) {
 
                     elements[x] = elements[0];
                     x = -1;
-                    this.j--;
-                    this.i--;
-                    if(this.i==-1)
+                    this.lector--;
+                    this.escritor--;
+                    if(this.escritor ==0)
                     {
-                        this.i=len-1;
+                        this.escritor =len-1;
+                    }
+                    if(this.lector==-1)
+                    {
+                        this.lector=0;
                     }
                 }
                 else
